@@ -840,10 +840,24 @@ void Console::Run()
 					targetTime = 0;
 					break;
 				}
+
+				if (_debugger) {
+					shared_ptr<Debugger> debugger = _debugger;
+					if (debugger) {
+						_debugger->ProcessEvent(EventType::Frequently);
+					}
+				}
 			}
 
 			//Sleep until we're ready to start the next frame
 			clockTimer.WaitUntil(targetTime);
+
+			if (_debugger) {
+				shared_ptr<Debugger> debugger = _debugger;
+				if (debugger) {
+					_debugger->ProcessEvent(EventType::Frequently);
+				}
+			}
 
 			if(useRunAhead) {
 				_settings->SetRunAheadFrameFlag(true);
@@ -856,7 +870,14 @@ void Console::Run()
 				_runLock.Release();
 
 				//Spin wait until we are allowed to start again
-				while(_pauseCounter > 0) { }
+				while(_pauseCounter > 0) { 
+					if (_debugger) {
+						shared_ptr<Debugger> debugger = _debugger;
+						if (debugger) {
+							_debugger->ProcessEvent(EventType::Frequently);
+						}
+					}
+				}
 
 				_runLock.Acquire();
 			}
@@ -886,6 +907,12 @@ void Console::Run()
 					std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(30));
 					pausedRequired = _settings->NeedsPause();
 					_paused = true;
+					if (_debugger) {
+						shared_ptr<Debugger> debugger = _debugger;
+						if (debugger) {
+							_debugger->ProcessEvent(EventType::Frequently);
+						}
+					}
 				}
 				_paused = false;
 					
