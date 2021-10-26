@@ -578,6 +578,7 @@ namespace Mesen.GUI.Debugger
 			new List<string> {"enum","emu.eventType.inputPolled","Triggered when the emulation core polls the state of the input devices for the next frame","","",""},
 			new List<string> {"enum","emu.eventType.spriteZeroHit","Triggered when the PPU sets the sprite zero hit flag","","",""},
 			new List<string> {"enum","emu.eventType.scriptEnded","Triggered when the current Lua script ends (script window closed, execution stopped, etc.)","","",""},
+			new List<string> {"enum","emu.eventType.whilePaused","Triggered repeatedly while execution is paused","","",""},
 			new List<string> {"enum","emu.executeCountType","emu.executeCountType.[value]","","","Values:\ncpuCycles = 0,\nppuCycles = 1,\ncpuInstructions = 2\n\nUsed by execute calls." },
 			new List<string> {"enum","emu.executeCountType.cpuCycles","Count the number of CPU cycles","","",""},
 			new List<string> {"enum","emu.executeCountType.ppuCycles","Count the number of PPU cycles","","",""},

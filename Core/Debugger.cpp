@@ -1005,6 +1005,7 @@ bool Debugger::SleepUntilResume(BreakSource source, uint32_t breakpointId, Break
 		_pausedForDebugHelper = breakRequested;
 		while((((stepCount == 0 || _breakRequested) && _suspendCount == 0) || _preventResume > 0) && !_stopFlag) {
 			std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(10));
+			if (preventResume == 0) ProcessEvent(EventType::WhilePaused);
 			if(stepCount == 0) {
 				_console->ResetRunTimers();
 			}
